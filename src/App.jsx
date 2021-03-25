@@ -3,11 +3,60 @@ import {connect, useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components'
 import {addItem, deleteItem} from './redux/actions';
 
-const Title = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
-  color: black;
+
+const AppContainer = styled.div`
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+`
+
+const AppDisplay = styled.div`
+    display: flex;
+    height: 540px;
+    width: 400px;
+    flex-direction: column;
+    align-items: center;
+    background: pink;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px  #292929;
+`
+
+const Title = styled.div`
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 1rem 0rem;
+    color: black;
+
 `;
+
+const ItemDisplay = styled.div`
+    height: 250px;
+    width: 250px;
+    background: white;
+    border: 1px solid black;
+`
+
+const Form = styled.form`
+    display: flex;
+    align-items: center;
+    width: 250px;
+    flex-direction: column;
+    margin: 1rem 0rem;
+`
+
+const Button = styled.button`
+    width: 150px;
+    margin 1rem 0rem;
+    padding: 1rem;
+    background-color: palegreen;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px  #292929;
+`
 
 const App = () => {
     const wishList = useSelector(state => state.wishList)
@@ -59,19 +108,21 @@ const App = () => {
     })
 
     return(
-        <div className="app_container">
-            <Title>MY WISHLIST</Title>
-            <div className="app-display_container">
-                <div className="app-display">
-                    {wishListComponent}
+        <AppContainer>
+            <AppDisplay>
+                <Title>MY WISHLIST</Title>
+                <div className="app-display_container">
+                    <ItemDisplay>
+                        {wishListComponent}
+                    </ItemDisplay>
                 </div>
-            </div>
-            <form className="app-form">
-                <input type="text" name="item" onChange={setItemHelper} value={item} required/>
-                <button className="button-add" onClick={submitItem}>Add</button>
-                <button className="button-submit" onClick={submitForm}>Submit</button>
-            </form>
-        </div>
+                <Form>
+                    <input type="text" name="item" onChange={setItemHelper} value={item} required/>
+                    <Button onClick={submitItem}>Add</Button>
+                    <button className="button-submit" onClick={submitForm}>Submit</button>
+                </Form>
+            </AppDisplay>
+        </AppContainer>
     )
 }
 
