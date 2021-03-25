@@ -9,18 +9,19 @@ const INITIAL_STATE = {
 
 // Complete the three cases below
 const reducer = (state = INITIAL_STATE, action) => {
+  let stateRef = state
   switch (action.type) {
     case ADD_ITEM:
       return {
-        wishList: ,
+        wishList: [...stateRef, action.payload],
       };
     case DELETE_ITEM:
       return {
-        wishList: ,
+        wishList: [],
       };
     default:
       return {
-        wishList: ,
+        wishList: [],
       };
   }
 };
