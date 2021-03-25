@@ -25,7 +25,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         // Once the item is found in our array, we remove the item using slice and return the new list
         if(item === action.payload){
           let left = currentList.slice(0, i)
-          let right = currentList.slice(i + 1, currentList.length - 1)
+          let right = currentList.slice(i + 1, currentList.length)
           newList = [...left, ...right]
         }
       }
