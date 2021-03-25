@@ -7,25 +7,33 @@ const App = () => {
     const [item, setItem] = useState("")
     const dispatch = useDispatch()
 
+    // Sets the value for our item when a user enters an input
     const setItemHelper = (e) => {
         setItem(e.target.value)
     }
 
-    const submitItem = (e) => {
-        e.preventDefault()
-        dispatch(addItem(item))
-        setItem("")
+    // Removes an item from the wishlist
+    const deleteItemHelper = (e) => {
+        let element = e.target.innerHTML
+        dispatch(deleteItem(element))
     }
 
-    const deleteItem = (e) => {
-        let element = e.target.innerHTML
-        console.log(element)
-        // dispatch(deleteItem(element))
+    const submitItem = (e) => {
+        e.preventDefault()
+        // Check to see if an item is already in a list
+        if(wishList.includes(item)){
+            alert("Item is already in wishlist!")
+        } else {
+            // Sends the item to the redux store
+            dispatch(addItem(item))
+        }
+        // Resets the input value to an empty string
+        setItem("")
     }
 
     const wishListComponent = wishList.map((element, i) => {
         return (
-            <div className="item-element" key={i} onClick={deleteItem}>
+            <div className="item-element" key={i} onClick={deleteItemHelper}>
                 {element}
             </div>
         )
@@ -38,7 +46,7 @@ const App = () => {
                 {wishListComponent}
             </div>
             <form>
-                <input type="text" name="item" onChange={setItemHelper} value={item}/>
+                <input type="text" name="item" onChange={setItemHelper} value={item} required/>
                 <button onClick={submitItem}>Add</button>
             </form>
         </div>
