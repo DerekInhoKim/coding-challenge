@@ -11,12 +11,35 @@ const App = () => {
         setItem(e.target.value)
     }
 
-    return(
-        <div>
-            <div>Hello</div>
+    const submitItem = (e) => {
+        e.preventDefault()
+        dispatch(addItem(item))
+        setItem("")
+    }
 
+    const deleteItem = (e) => {
+        let element = e.target.innerHTML
+        console.log(element)
+        // dispatch(deleteItem(element))
+    }
+
+    const wishListComponent = wishList.map((element, i) => {
+        return (
+            <div className="item-element" key={i} onClick={deleteItem}>
+                {element}
+            </div>
+        )
+    })
+
+    return(
+        <div className="app-container">
+            <div>Hello</div>
+            <div>
+                {wishListComponent}
+            </div>
             <form>
-                <input type="text" name="item" onChange={setItemHelper}/>
+                <input type="text" name="item" onChange={setItemHelper} value={item}/>
+                <button onClick={submitItem}>Add</button>
             </form>
         </div>
     )
