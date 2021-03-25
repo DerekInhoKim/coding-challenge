@@ -1,6 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {connect, useSelector, useDispatch} from 'react-redux';
+import styled from 'styled-components'
 import {addItem, deleteItem} from './redux/actions';
+
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: black;
+`;
 
 const App = () => {
     const wishList = useSelector(state => state.wishList)
@@ -31,6 +38,18 @@ const App = () => {
         setItem("")
     }
 
+    const submitForm = (e) => {
+        e.preventDefault()
+        if(wishList.length === 0){
+            alert("Please add items to your wishlist!")
+        } else {
+            // Dispatch a dummy action to reach the base case that will clear our wishlist
+            dispatch({type: "default"})
+            alert("Wish list submitted to Santa!")
+        }
+        setItem("")
+    }
+
     const wishListComponent = wishList.map((element, i) => {
         return (
             <div className="item-element" key={i} onClick={deleteItemHelper}>
@@ -40,14 +59,17 @@ const App = () => {
     })
 
     return(
-        <div className="app-container">
-            <div>Hello</div>
-            <div>
-                {wishListComponent}
+        <div className="app_container">
+            <Title>MY WISHLIST</Title>
+            <div className="app-display_container">
+                <div className="app-display">
+                    {wishListComponent}
+                </div>
             </div>
-            <form>
+            <form className="app-form">
                 <input type="text" name="item" onChange={setItemHelper} value={item} required/>
-                <button onClick={submitItem}>Add</button>
+                <button className="button-add" onClick={submitItem}>Add</button>
+                <button className="button-submit" onClick={submitForm}>Submit</button>
             </form>
         </div>
     )
