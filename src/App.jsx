@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {connect, useSelector, useDispatch} from 'react-redux';
+import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components'
 import {addItem, deleteItem} from './redux/actions';
 
@@ -48,14 +48,29 @@ const Form = styled.form`
     margin: 1rem 0rem;
 `
 
+const Input = styled.input`
+    width: 100%;
+    height: 30px;
+`
+
 const Button = styled.button`
-    width: 150px;
+    width: 125px;
     margin 1rem 0rem;
     padding: 1rem;
     background-color: palegreen;
     border: none;
     border-radius: 10px;
     box-shadow: 0px 0px 5px  #292929;
+    font-weight: bold;
+`
+
+const SubmitButton = styled(Button)`
+    width: 100%;
+`
+
+const ListItem = styled.div`
+    margin: 10px 10px;
+    cursor: pointer;
 `
 
 const App = () => {
@@ -74,10 +89,11 @@ const App = () => {
         dispatch(deleteItem(element))
     }
 
+    // Handles the addition of an item to the list
     const submitItem = (e) => {
         e.preventDefault()
-        // Check to see if an item is already in a list
-        if(wishList.includes(item)){
+        // Check to see if an item is already in a list, as well as if the item is an empty string
+        if(wishList.includes(item) && item){
             alert("Item is already in wishlist!")
         } else {
             // Sends the item to the redux store
@@ -87,6 +103,7 @@ const App = () => {
         setItem("")
     }
 
+    // Handles submission of the form
     const submitForm = (e) => {
         e.preventDefault()
         if(wishList.length === 0){
@@ -99,11 +116,12 @@ const App = () => {
         setItem("")
     }
 
+    // Renders each item from the list
     const wishListComponent = wishList.map((element, i) => {
         return (
-            <div className="item-element" key={i} onClick={deleteItemHelper}>
+            <ListItem key={i} onClick={deleteItemHelper}>
                 {element}
-            </div>
+            </ListItem>
         )
     })
 
@@ -111,15 +129,13 @@ const App = () => {
         <AppContainer>
             <AppDisplay>
                 <Title>MY WISHLIST</Title>
-                <div className="app-display_container">
                     <ItemDisplay>
                         {wishListComponent}
                     </ItemDisplay>
-                </div>
                 <Form>
-                    <input type="text" name="item" onChange={setItemHelper} value={item} required/>
+                    <Input onChange={setItemHelper} value={item} required/>
                     <Button onClick={submitItem}>Add</Button>
-                    <button className="button-submit" onClick={submitForm}>Submit</button>
+                    <SubmitButton onClick={submitForm}>Submit</SubmitButton>
                 </Form>
             </AppDisplay>
         </AppContainer>
